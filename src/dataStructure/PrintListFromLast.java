@@ -1,5 +1,11 @@
 package dataStructure;
 
+/**
+ * 关于链表的题目
+ * 6/18/22/23/24/25/52
+ * @author Amei
+ *
+ */
 public class PrintListFromLast {
 	public ListNode head;
 
@@ -33,7 +39,7 @@ public class PrintListFromLast {
 		if (head == null) {
 			return;
 		}
-		ListNode tobeRemoveNode = null;
+		ListNode tobeRemoveNode = new ListNode();
 
 		if (head.val == value) {
 			tobeRemoveNode = head;
@@ -164,7 +170,7 @@ public class PrintListFromLast {
 	public ListNode reverseList(ListNode head) {
 		ListNode resverseHead = null;
 		ListNode p = head;
-		ListNode pre = null;
+		ListNode pre = new ListNode();
 		while (p != null) {
 			ListNode pnext = p.next;
 			if (pnext == null) {
@@ -206,6 +212,7 @@ public class PrintListFromLast {
 	}
 	
 	/**
+	 * 面试题52
 	 * 两个链表的第一个公共节点
 	 * 如果两个单向链表有公共节点，那么这两个链表从某一节点开始，
 	 * 它们的next都指向同一个节点，即之后的所有节点都是重合的，不可能再出现交叉
@@ -251,6 +258,64 @@ public class PrintListFromLast {
 		return len;
 	}
 	
+	/**
+	 * 链表中是否存在环
+	 * 在链表中存在环的前提是找到一快一慢两个指针相遇的结点
+	 * @param first
+	 * @return
+	 */
+	public ListNode meetingNode(ListNode first) {
+		if (first == null) {
+			return null;
+		}
+		ListNode pSlow = first.next;
+		if (pSlow == null) {
+			return null;
+		}
+		ListNode pFast = pSlow.next;
+		while (pFast != null && pSlow!=null) {
+			if (pFast == pSlow) {
+				return pFast;
+			}
+			pSlow = pSlow.next;//移动一步
+			pFast = pFast.next;
+			if (pFast != null) {
+				pFast = pFast.next;//移动两步
+			}
+		}
+		return null;
+	}
+	/**
+	 * 链表中环的入口
+	 * 面试题23
+	 * @param pNode
+	 * @return
+	 */
+	ListNode entryNodeOfLoop(ListNode pNode){
+		ListNode meet = meetingNode(pNode);
+		if (meet == null) {
+			System.err.println("链表中不存在环！");
+			return null;
+		}
+		int count = 1;
+		ListNode t = meet;
+		while (t.next != meet) {
+			count++;
+			t = t.next;
+		}
+		System.out.println("环中结点数为："+count);
+		/**先移动t，次数为环中结点的数目*/
+		t = pNode;
+		for (int i = 0; i < count; i++) 
+			t = t.next;
+		/**再移动t和t2*/
+		ListNode t2 = pNode;
+		while (t != t2) {
+			t = t.next;
+			t2 = t2.next;
+		}
+		return t;
+	}
 	
 	
 
@@ -260,9 +325,7 @@ public class PrintListFromLast {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		PrintListFromLast plf = new PrintListFromLast();
-		//int[] nodeval = { 1,3,5,7 };
-		//ListNode head = plf.addNodes(nodeval);
-		
+
 		ListNode l1 = new ListNode(1);
 		ListNode l2 = new ListNode(2);
 		ListNode l3 = new ListNode(3);
@@ -275,13 +338,10 @@ public class PrintListFromLast {
 		l1.next = l3;
 		l3.next = l5;
 		l5.next = l7;
-		
+		l7.next = l2;
 		l2.next = l5;
 
-		plf.printList(l1);
-		plf.printList(l2);
-		
-		System.out.println(plf.findFirstCommentNode(l1, l2).val);
-		
+		System.out.println(plf.entryNodeOfLoop(l1).val);
+		//System.out.println(plf.findFirstCommentNode(l1, l5).val);	
 	}
 }

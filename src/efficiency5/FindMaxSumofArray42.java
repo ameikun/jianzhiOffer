@@ -1,8 +1,9 @@
 package efficiency5;
 
 /**
+ * 面试题42
  * 连续子数组的最大和*/
-public class FindMaxSumofArray {
+public class FindMaxSumofArray42 {
 	public int MaxSumofSubArray(int[] array) {
 		if (array.length<=0) {
 			return 0;
@@ -25,7 +26,7 @@ public class FindMaxSumofArray {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		FindMaxSumofArray maxSumofArray = new FindMaxSumofArray();
+		FindMaxSumofArray42 maxSumofArray = new FindMaxSumofArray42();
 		int[] array = { 1, -2, 3, 10, -4, 7, 2, -5 };
 		System.out.println(maxSumofArray.MaxSumofSubArray(array));
 	}
